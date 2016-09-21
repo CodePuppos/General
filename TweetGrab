@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+#
+# A simple Twitter searcher that returns some recent tweets based on a keyword, then saves them.
+# Made by Andrew Puppos ©2016
+#
+
+import tweepy
+
+# Tweepy authorization
+CONSUMER_KEY = 'xxx'
+CONSUMER_SECRET = 'xxx'
+ACCESS_KEY = 'xxx-xxx'
+ACCESS_SECRET = 'xxx'
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+api = tweepy.API(auth)
+
+# A text file somewhere, that saves the tweets you find.
+f = open("C:/Users/...", "w")
+print f
+
+# Search for something here.
+term = raw_input('Enter Search Term: ')
+
+# Looks for both capitalized and uniform case occurrences of the search term.
+for status in api.home_timeline():
+    if term.lower() in status.text.lower():
+        print status.text
+        f.write((status.text).encode('ascii', 'ignore') + status.author.screen_name + '\n')
+
+    if term.capitalize() in status.text:
+        print status.text
+        f.write((status.text).encode('ascii', 'ignore') + status.author.screen_name + '\n')
