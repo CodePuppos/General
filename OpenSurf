@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+#
+# Welcome to OpenSurf, the open directory finder for Reddit.
+# Made by Andrew and Jay ©2016
+#
+
+import os
+import time
+import praw
+
+# Reddit authorization
+user_agent = "Keyword Driven Open Directory Downloader by the PupMan and Sidekick Jay"
+r = praw.Reddit(user_agent=user_agent)
+
+# This program searches the opendirectories subreddit
+subreddit = r.get_subreddit('opendirectories')
+
+# enter keyword to search for
+keyword01 = raw_input("Enter a keyword: ")
+
+list = []
+
+for submission in subreddit.get_hot(limit=5):
+    print submission.title
+    print submission.url
+    if keyword01.lower() in submission.title.lower():  # creates list of all URLs whose post title contains the keyword
+        print '\033[1m' + 'FOUND ONE!' + '\033[0m'
+        list.append(submission.url)
+
+for submission.url in list:
+    print '\033[1m' + '\nGet this one:' + '\033[0m'
+    print submission.url
+
+    url = submission.url  # creates a url variable for each relevant URL
+
+    os.chdir('C:/Users/...')
+    os.system('wget -r -np -c --reject "index.html*" --wait=10 %url')  # executes wget to download relevant directory
+
+    time.sleep(300) # waits a while before starting next download
